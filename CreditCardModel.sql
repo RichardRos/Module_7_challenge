@@ -1,0 +1,72 @@
+-- Create schemas
+
+-- Create tables
+CREATE TABLE IF NOT EXISTS CARD_HOLDER
+(
+    id INTEGER NOT NULL,
+    name CHARACTER(30),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS CREDIT_CARD
+(
+    card VARCHAR(20) NOT NULL,
+    cardholder_id INTEGER,
+    PRIMARY KEY(card)
+);
+
+CREATE TABLE IF NOT EXISTS MERCHANT
+(
+    id INTEGER NOT NULL,
+    name CHARACTER(30),
+    id_merchant_cateagory INTEGER,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS MERCHANT_CATEGORY
+(
+    id INTEGER NOT NULL,
+    name CHARACTER(30),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS TRANSACTION
+(
+    id INTEGER NOT NULL,
+    date TIMESTAMP,
+    amount REAL(2),
+    card VARCHAR(20),
+    id_merchant INTEGER,
+    TRANSACTION_card INTEGER,
+    PRIMARY KEY(id)
+);
+
+
+-- Create FKs
+ALTER TABLE CREDIT_CARD
+    ADD    FOREIGN KEY (cardholder_id)
+    REFERENCES CARD_HOLDER(id)
+    MATCH SIMPLE
+;
+    
+ALTER TABLE MERCHANT
+    ADD    FOREIGN KEY (id_merchant_cateagory)
+    REFERENCES MERCHANT_CATEGORY(id)
+    MATCH SIMPLE
+;
+    
+ALTER TABLE TRANSACTION
+    ADD    FOREIGN KEY (id_merchant)
+    REFERENCES MERCHANT(id)
+    MATCH SIMPLE
+;
+    
+ALTER TABLE TRANSACTION
+    ADD    FOREIGN KEY (card)
+    REFERENCES CREDIT_CARD(card)
+    MATCH SIMPLE
+;
+    
+
+-- Create Indexes
+
